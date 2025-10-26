@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MANZIL - Discover Your New Home</title>
+    <link rel="stylesheet" href="./../static/css/main.css" />
+    <link href="https://fonts.googleapis.com/css?family=Circular+Std&display=swap" rel="stylesheet" />
+</head>
+
+<script>
+  window.addEventListener('scroll', function() {
+    const navbar = document.querySelector('.navbar');
+    if (window.scrollY > 5) { 
+      navbar.style.background = '#fff';
+      navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+    } else {
+      navbar.style.background = 'transparent';
+      navbar.style.boxShadow = 'none';
+    }
+  });
+</script>
+
+
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <span class="red">MAN</span><span>ZIL</span>
+            <span class="icon">🏠</span>
+        </div>
+
+        <div class="nav-buttons">
+            <nav>
+                <ul>
+                    <li><a href="#">Buy</a></li>
+                    <li><a href="#">Sell</a></li>
+                    <li><a href="#">Rent</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="auth-buttons">
+            {% if current_user.is_authenticated %}
+            <div class="user-actions">
+                <!-- Inbox Icon -->
+                <div class="icon-wrapper">
+                    <img src="{{ url_for('static', filename='images/inbox.png') }}" alt="Inbox" class="icon">
+                </div>
+
+                <!-- Favorites Icon -->
+                <div class="icon-wrapper">
+                    <img src="{{ url_for('static', filename='images/favourites.png') }}" alt="Favorites" class="icon">
+                </div>
+
+                <!-- User Icon -->
+                <div class="icon-wrapper user-icon">
+                    <img src="{{ url_for('static', filename='images/user.png') }}" alt="User" class="icon">
+                    <div class="user-card">
+                        <p><strong>{{ current_user.username }}</strong></p>
+                        <p>{{ current_user.email }}</p>
+                        <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="login">Log In</a>
+                <a href="{{ url_for('register') }}" class="signup">Sign Up</a>
+            {% endif %}
+        </div>
+
+    </header>
+
+
+    <main class="hero">
+        <h1>Discover Your New Home</h1>
+        <p class="subtitle">A great platform to buy, sell or even rent your properties without any commissions.</p>
+
+        <div class="tab-menu">
+            <button class="active">Buy</button>
+            <button>Sell</button>
+            <button>Rent</button>
+        </div>
+
+        <div class="search-box">
+            <input type="text" placeholder="Address, School, City, Zip or Neighborhood" />
+            <button><span>🔍</span></button>
+        </div>
+
+        <section class="area-info">
+            <p class="desc">
+                Whether you’re in search of a new residence, an investment opportunity, or simply exploring the areas,
+                we are here to assist you in discovering precisely what meets your needs.
+            </p>
+
+            <div class="stats">
+                <div class="card">
+                    <h4>165</h4>
+                    <p>Homes For Rent</p>
+                </div>
+                <div class="card">
+                    <h4>416</h4>
+                    <p>Homes For Sale</p>
+                </div>
+                <div class="card">
+                    <h4>251</h4>
+                    <p>Apartments Available</p>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>
