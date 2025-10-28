@@ -56,7 +56,7 @@ body {
 }
 
 .logo {
-  font-size: 20px;
+  font-size: 30px;
   font-weight: 900;
   display: flex;
   gap: 5px;
@@ -102,20 +102,16 @@ nav a {
   width: 100%;
 }
 
-
-
-
 .nav-buttons{
-  align-items: center;
-  padding-left: 54px;
- 
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%); 
 }
 
 .auth-buttons a {
   margin-left: 15px;
   text-decoration: none;
   font-weight: 900;
-  color: #333;
 }
 
 .login {
@@ -123,7 +119,7 @@ nav a {
 }
 
 .signup {
-  color: #fff;
+  color: #FFFFFF;
   background: #e53935;
   padding: 8px 15px;
   border-radius: 30px;
@@ -131,6 +127,14 @@ nav a {
 
 .auth-buttons {
   position: relative;
+}
+
+.login:hover{
+  color:#000000;
+}
+
+.signup:hover{
+  background: #c42e2c;
 }
 
 /* Container for the 3 icons */
@@ -150,6 +154,8 @@ nav a {
   height: 22px;
   cursor: pointer;
   transition: transform 0.2s ease;
+  stroke-width: 10px;
+  stroke: #333;
 }
 
 .icon:hover {
@@ -160,7 +166,7 @@ nav a {
 .user-icon .user-card {
   display: none;
   position: absolute;
-  top: 35px; /* below the user icon */
+  top: 45px; /* below the user icon */
   right: 0;
   background: rgba(255,255,255,0.95);
   color: #333;
