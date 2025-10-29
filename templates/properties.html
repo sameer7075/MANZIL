@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Properties - MANZIL</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='./../static/css/properties.css') }}">
+</head>
+<body>
+    <h1>Available Properties</h1>
+    <div class="properties-container">
+        {% for property in properties %}
+        <div class="property-card">
+            <h2>{{ property.title }}</h2>
+            <p><strong>Location:</strong> {{ property.location }}</p>
+            <p><strong>Price:</strong> ${{ property.price }}</p>
+            <p>{{ property.description }}</p>
+            <p><small>Listed by {{ property.user.username }}</small></p>
+        </div>
+        {% else %}
+        <p>No properties listed yet.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>

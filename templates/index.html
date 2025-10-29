@@ -34,8 +34,10 @@
         <div class="nav-buttons">
             <nav>
                 <ul>
-                    <li><a href="#">Buy</a></li>
-                    <li><a href="#">Sell</a></li>
+                    <li><a href="{{ url_for('view_properties') }}">Buy</a></li>
+                    {% if current_user.is_authenticated %}
+                        <li><a href="{{ url_for('add_property') }}">Sell</a></li>
+                    {% endif %}
                     <li><a href="#">Rent</a></li>
                 </ul>
             </nav>
@@ -44,17 +46,15 @@
         <div class="auth-buttons">
             {% if current_user.is_authenticated %}
             <div class="user-actions">
-                <!-- Inbox Icon -->
+                
                 <div class="icon-wrapper">
                     <img src="{{ url_for('static', filename='images/inbox.png') }}" alt="Inbox" class="icon">
                 </div>
 
-                <!-- Favorites Icon -->
+                
                 <div class="icon-wrapper">
                     <img src="{{ url_for('static', filename='images/favourites.png') }}" alt="Favorites" class="icon">
                 </div>
-
-                <!-- User Icon -->
                
                 <div class="icon-wrapper user-icon">
                     <img src="{{ url_for('static', filename='images/user.png') }}" alt="User" class="icon">
@@ -86,7 +86,7 @@
 
         <div class="search-box">
             <input type="text" placeholder="Address, School, City, Zip or Neighborhood" />
-            <button><span>🔍</span></button>
+            <button><span><img src="{{ url_for('static', filename='images/search.png') }}" alt="User" class="search-icon"></span></button>
         </div>
 
         <section class="area-info">
@@ -111,6 +111,83 @@
             </div>
         </section>
     </main>
+
+
+        <!-- Explore Section -->
+    <section class="explore-section">
+        <div class="explore-cards">
+            <div class="explore-card">
+                <img src="{{ url_for('static', filename='images/house-search.png') }}" alt="Find Home" class="explore-icon">
+                <h2>Looking for the new home?</h2>
+                <p>10 new offers every day. 350 offers on site, trusted by a community of thousands of users.</p>
+            </div>
+
+            <div class="explore-card">
+                <img src="{{ url_for('static', filename='images/sale-signal.png') }}" alt="Sell Home" class="explore-icon">
+                <h2>Want to sell your home?</h2>
+                <p>10 new offers every day. 350 offers on site, trusted by a community of thousands of users.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="why-choose-us">
+        <h1>Why Choose Us</h1>
+        <div class="choose-grid">
+            <div class="choose-card">
+                <img src="{{ url_for('static', filename='images/trust.png') }}" alt="Trusted" class="choose-icon">
+                <h3>TRUSTED BY THOUSANDS</h3>
+                <p>Join a growing community of satisfied users who rely on MANZIL to find their perfect homes and investment opportunities with confidence.</p>
+            </div>
+
+            <div class="choose-card">
+                <img src="{{ url_for('static', filename='images/property.png') }}" alt="Properties" class="choose-icon">
+                <h3>WIDE RANGE OF PROPERTIES</h3>
+                <p>Explore a diverse collection of properties for sale and rent — from modern apartments to spacious family homes — all in one easy-to-use platform.</p>
+            </div>
+
+            <div class="choose-card">
+                <img src="{{ url_for('static', filename='images/buyer.png') }}" alt="Financing" class="choose-icon">
+                <h3>REAL ESTATE MADE SIMPLE</h3>
+                <p>MANZIL makes your property journey smooth and hassle-free with powerful search tools, verified listings, and a seamless user experience.</p>
+            </div>
+        </div>
+    </section>
+
+        <!-- Footer Section -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <h2 class="footer-logo"><span class="red">MAN</span>ZIL</h2>
+                <p>Your trusted partner in buying, selling, and renting properties — built with care by Team AEGIS.</p>
+            </div>
+
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#">Buy</a></li>
+                    <li><a href="#">Sell</a></li>
+                    <li><a href="#">Rent</a></li>
+                 
+                </ul>
+            </div>
+
+            <div class="footer-contact">
+                <h4>Contact Us</h4>
+                <p>Email: support@manzil.com</p>
+                <p>Phone: +92 300 1234567</p>
+                <p>Location: Islamabad, Pakistan</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2025 MANZIL | Designed & Developed by <strong>Team AEGIS</strong></p>
+        </div>
+    </footer>
+
+
+
+
 </body>
 
 </html>

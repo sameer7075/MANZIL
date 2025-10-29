@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Property - MANZIL</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='./../static/css/properties.css') }}">
+</head>
+<body>
+    <div class="form-container">
+        <h2>Add a New Property</h2>
+        <form method="POST">
+            <input type="text" name="title" placeholder="Title" required>
+            <textarea name="description" placeholder="Description" required></textarea>
+            <input type="number" step="0.01" name="price" placeholder="Price" required>
+            <input type="text" name="location" placeholder="Location" required>
+            <button type="submit">Add Property</button>
+        </form>
+        <a href="{{ url_for('view_properties') }}">View All Properties</a>
+    </div>
+</body>
+</html>

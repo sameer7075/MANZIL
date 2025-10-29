@@ -13,14 +13,22 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
 
-# ===========================
-# DATABASE MODEL
-# ===========================
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(200), nullable=False)  # hashed
+    password = db.Column(db.String(200), nullable=False)  
+
+class Property(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    price = db.Column(db.Float, nullable=False)
+    location = db.Column(db.String(100), nullable=False)
+    image = db.Column(db.String(200), nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    user = db.relationship('User', backref=db.backref('properties', lazy=True))
 
 
 @login_manager.user_loader
@@ -28,18 +36,11 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-# ===========================
-# ROUTES
-# ===========================
-
-# Home route (optional, redirect to login/dashboard)
 @app.route('/')
 def index():
     return render_template('index.html')
 
 
-
-# Registration
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
@@ -50,16 +51,16 @@ def register():
         email = request.form.get('email')
         password = request.form.get('password')
 
-        # Check if user exists
+        
         user = User.query.filter_by(email=email).first()
         if user:
             flash('Email already registered!', 'danger')
             return redirect(url_for('register'))
 
-        # Hash password
+        
         hashed_password = pbkdf2_sha256.hash(password)
 
-        # Create new user
+        
         new_user = User(username=username, email=email, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
@@ -70,7 +71,6 @@ def register():
     return render_template('register.html')
 
 
-# Login
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -94,14 +94,12 @@ def login():
     return render_template('login.html')
 
 
-# Dashboard (protected)
 @app.route('/dashboard')
 @login_required
 def dashboard():
     return render_template('dashboard.html', username=current_user.username)
 
 
-# Logout
 @app.route('/logout')
 @login_required
 def logout():
@@ -109,11 +107,37 @@ def logout():
     flash('You have been logged out.', 'success')
     return redirect(url_for('index'))
 
+@app.route('/add_property', methods=['GET', 'POST'])
+@login_required
+def add_property():
+    if request.method == 'POST':
+        title = request.form.get('title')
+        description = request.form.get('description')
+        price = request.form.get('price')
+        location = request.form.get('location')
 
-# ===========================
-# Run App
-# ===========================
+        new_property = Property(
+            title=title,
+            description=description,
+            price=price,
+            location=location,
+            user_id=current_user.id
+        )
+        db.session.add(new_property)
+        db.session.commit()
+
+        flash('Property added successfully!', 'success')
+        return redirect(url_for('view_properties'))
+
+    return render_template('add_property.html')
+
+@app.route('/properties')
+def view_properties():
+    properties = Property.query.all()
+    return render_template('properties.html', properties=properties)
+
+
 if __name__ == '__main__':
     with app.app_context():
-        db.create_all()  # Creates the database tables
+        db.create_all()  
     app.run(debug=True)

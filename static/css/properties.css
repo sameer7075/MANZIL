@@ -1,0 +1,147 @@
+/* -------------------------------
+   GENERAL PAGE STYLES
+---------------------------------- */
+body {
+    font-family: 'Circular Std', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* -------------------------------
+   CONTAINER & LAYOUT
+---------------------------------- */
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 50px auto;
+}
+
+/* -------------------------------
+   PAGE TITLES
+---------------------------------- */
+h1, h2 {
+    text-align: center;
+    color: #e63946;
+    letter-spacing: 1px;
+}
+
+h2 {
+    margin-bottom: 25px;
+}
+
+/* -------------------------------
+   ADD PROPERTY FORM
+---------------------------------- */
+.form-container {
+    background: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    width: 60%;
+    margin: 60px auto;
+}
+
+.form-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-container input,
+.form-container textarea {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.form-container textarea {
+    height: 120px;
+    resize: none;
+}
+
+.form-container button {
+    background-color: #e63946;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.form-container button:hover {
+    background-color: #d62839;
+}
+
+.form-container a {
+    display: inline-block;
+    text-align: center;
+    margin-top: 20px;
+    color: #457b9d;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.form-container a:hover {
+    color: #1d3557;
+}
+
+/* -------------------------------
+   PROPERTY CARDS
+---------------------------------- */
+.properties-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 40px;
+}
+
+.property-card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    padding: 25px;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.property-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+}
+
+.property-card h2 {
+    margin-top: 0;
+    color: #e63946;
+    font-size: 20px;
+}
+
+.property-card p {
+    margin: 8px 0;
+    color: #444;
+}
+
+.property-card small {
+    display: block;
+    margin-top: 10px;
+    color: #777;
+    font-style: italic;
+}
+
+/* -------------------------------
+   RESPONSIVE DESIGN
+---------------------------------- */
+@media (max-width: 768px) {
+    .form-container {
+        width: 90%;
+        padding: 25px;
+    }
+
+    .properties-container {
+        padding: 20px;
+        grid-template-columns: 1fr;
+    }
+}
