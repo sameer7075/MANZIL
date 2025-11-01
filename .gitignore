@@ -1,22 +1,21 @@
-# Python virtual environment
 venv/
 
-# Python compiled files
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 
-# SQLite database
+
 site.db
 
-# Flask instance folder (if you use it)
-instance/
 
-# Environment variables
+instance/
+static/uploads/
+
+
 .env
 
-# IDE/editor files
+
 .vscode/
 *.idea/
 *.DS_Store

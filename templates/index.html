@@ -9,37 +9,22 @@
     <link href="https://fonts.googleapis.com/css?family=Circular+Std&display=swap" rel="stylesheet" />
 </head>
 
-<script>
-  window.addEventListener('scroll', function() {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 5) { 
-      navbar.style.background = '#fff';
-      navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
-    } else {
-      navbar.style.background = 'transparent';
-      navbar.style.boxShadow = 'none';
-    }
-  });
-</script>
-
-
 <body>
     <header class="navbar">
-        <div class="logo">
+        <a href="{{ url_for('index') }}" class="logo">
             <div class="Heading">
-            <span class="red">MAN</span><span>ZIL</span>
+                <span class="red">MAN</span><span>ZIL</span>
             </div>
-            <div class="icon-wrapper">
-                <img src="{{ url_for('static', filename='images/home.png') }}" alt="Inbox" class="icon">
-            </div>
-        </div>
+        </a>
 
         <div class="nav-buttons">
             <nav>
                 <ul>
-                    <li><a href="#">Buy</a></li>
-                    <li><a href="#">Sell</a></li>
-                    <li><a href="#">Rent</a></li>
+                    <li><a href="{{ url_for('view_properties', purpose='For Sale') }}" class="btn">Buy</a></li>
+                    {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('add_property') }}">Sell</a></li>
+                    {% endif %}
+                    <li><a href="{{ url_for('view_properties', purpose='For Rent') }}" class="btn">Rent</a></li>
                 </ul>
             </nav>
         </div>
@@ -47,17 +32,16 @@
         <div class="auth-buttons">
             {% if current_user.is_authenticated %}
             <div class="user-actions">
-                <!-- Inbox Icon -->
+
                 <div class="icon-wrapper">
                     <img src="{{ url_for('static', filename='images/inbox.png') }}" alt="Inbox" class="icon">
                 </div>
 
-                <!-- Favorites Icon -->
+
                 <div class="icon-wrapper">
                     <img src="{{ url_for('static', filename='images/favourites.png') }}" alt="Favorites" class="icon">
                 </div>
 
-                <!-- User Icon -->
                 <div class="icon-wrapper user-icon">
                     <img src="{{ url_for('static', filename='images/user.png') }}" alt="User" class="icon">
                     <div class="user-card">
@@ -68,8 +52,8 @@
                 </div>
             </div>
             {% else %}
-                <a href="{{ url_for('login') }}" class="login">Log In</a>
-                <a href="{{ url_for('register') }}" class="signup">Sign Up</a>
+            <a href="{{ url_for('login') }}" class="login">Log In</a>
+            <a href="{{ url_for('register') }}" class="signup">Sign Up</a>
             {% endif %}
         </div>
 
@@ -80,16 +64,35 @@
         <h1>Discover Your New Home</h1>
         <p class="subtitle">A great platform to buy, sell or even rent your properties without any commissions.</p>
 
-        <div class="tab-menu">
-            <button class="active">Buy</button>
-            <button>Sell</button>
-            <button>Rent</button>
-        </div>
+        <form action="{{ url_for('view_properties') }}" method="get" class="search-form">
+            <div class="tab-menu">
+                <input type="radio" id="all" name="filter" value="all" {% if request.args.get('filter', 'all' )=='All'
+                    %}checked{% endif %}>
+                <label for="all"
+                    class="tab-btn {% if request.args.get('filter', 'all') == 'all' %}active{% endif %}">All</label>
 
-        <div class="search-box">
-            <input type="text" placeholder="Address, School, City, Zip or Neighborhood" />
-            <button><span>🔍</span></button>
-        </div>
+                <input type="radio" id="sale" name="filter" value="sale" {% if request.args.get('filter')=='For Sale'
+                    %}checked{% endif %}>
+                <label for="sale" class="tab-btn {% if request.args.get('filter') == 'sale' %}active{% endif %}">For
+                    Sale</label>
+
+                <input type="radio" id="rent" name="filter" value="rent" {% if request.args.get('filter')=='For Rent'
+                    %}checked{% endif %}>
+                <label for="rent" class="tab-btn {% if request.args.get('filter') == 'rent' %}active{% endif %}">For
+                    Rent</label>
+                <span class="tab-underline"></span>
+            </div>
+
+            <div class="search-box">
+                <input type="text" name="query" placeholder="Address, School, City, Zip or Neighborhood"
+                    value="{{ request.args.get('query', '') }}" />
+                <button type="submit">
+                    <span><img src="{{ url_for('static', filename='images/search.png') }}" alt="Search"
+                            class="search-icon"></span>
+                </button>
+            </div>
+        </form>
+
 
         <section class="area-info">
             <p class="desc">
@@ -113,6 +116,127 @@
             </div>
         </section>
     </main>
+
+
+
+    <section class="explore-section">
+        <div class="explore-cards">
+            <div class="explore-card">
+                <img src="{{ url_for('static', filename='images/house-search.png') }}" alt="Find Home"
+                    class="explore-icon">
+                <h2>Looking for the new home?</h2>
+                <p>10 new offers every day. 350 offers on site, trusted by a community of thousands of users.</p>
+            </div>
+
+            <div class="explore-card">
+                <img src="{{ url_for('static', filename='images/sale-signal.png') }}" alt="Sell Home"
+                    class="explore-icon">
+                <h2>Want to sell your home?</h2>
+                <p>10 new offers every day. 350 offers on site, trusted by a community of thousands of users.</p>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="why-choose-us">
+        <h1>Why Choose Us</h1>
+        <div class="choose-grid">
+            <div class="choose-card">
+                <img src="{{ url_for('static', filename='images/trust.png') }}" alt="Trusted" class="choose-icon">
+                <h3>TRUSTED BY THOUSANDS</h3>
+                <p>Join a growing community of satisfied users who rely on MANZIL to find their perfect homes and
+                    investment opportunities with confidence.</p>
+            </div>
+
+            <div class="choose-card">
+                <img src="{{ url_for('static', filename='images/property.png') }}" alt="Properties" class="choose-icon">
+                <h3>WIDE RANGE OF PROPERTIES</h3>
+                <p>Explore a diverse collection of properties for sale and rent — from modern apartments to spacious
+                    family homes — all in one easy-to-use platform.</p>
+            </div>
+
+            <div class="choose-card">
+                <img src="{{ url_for('static', filename='images/buyer.png') }}" alt="Financing" class="choose-icon">
+                <h3>REAL ESTATE MADE SIMPLE</h3>
+                <p>MANZIL makes your property journey smooth and hassle-free with powerful search tools, verified
+                    listings, and a seamless user experience.</p>
+            </div>
+        </div>
+    </section>
+
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <h2 class="footer-logo"><span class="red">MAN</span>ZIL</h2>
+                <p>Your trusted partner in buying, selling, and renting properties — built with care by Team AEGIS.</p>
+            </div>
+
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="{{ url_for('view_properties', purpose='For Sale') }}" class="btn">Buy</a></li>
+                    {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('add_property') }}">Sell</a></li>
+                    {% endif %}
+                    <li><a href="{{ url_for('view_properties', purpose='For Rent') }}" class="btn">Rent</a></li>
+
+                </ul>
+            </div>
+
+            <div class="footer-contact">
+                <h4>Contact Us</h4>
+                <p>Email: support@manzil.com</p>
+                <p>Phone: +92 300 1234567</p>
+                <p>Location: Islamabad, Pakistan</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2025 MANZIL | Designed & Developed by <strong>Team AEGIS</strong></p>
+        </div>
+    </footer>
+
+    <script>
+        const tabLabels = document.querySelectorAll('.tab-menu label');
+        const underline = document.querySelector('.tab-underline');
+
+        function moveUnderline(label) {
+            underline.style.width = label.offsetWidth + 'px';
+            underline.style.left = label.offsetLeft + 'px';
+        }
+
+        const activeTab = document.querySelector('.tab-btn.active');
+        if (activeTab) moveUnderline(activeTab);
+
+        tabLabels.forEach(label => {
+            label.addEventListener('click', () => {
+                tabLabels.forEach(l => l.classList.remove('active'));
+                label.classList.add('active');
+                moveUnderline(label);
+            });
+        });
+
+        window.addEventListener('resize', () => {
+            const active = document.querySelector('.tab-btn.active');
+            if (active) moveUnderline(active);
+        });
+    </script>
+
+    <script>
+        const cards = document.querySelectorAll('.explore-card');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        cards.forEach(card => observer.observe(card));
+    </script>
+
 </body>
 
 </html>
