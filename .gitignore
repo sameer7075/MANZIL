@@ -10,6 +10,7 @@ site.db
 
 
 instance/
+static/uploads/
 
 
 .env
